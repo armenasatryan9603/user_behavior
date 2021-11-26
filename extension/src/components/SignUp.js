@@ -1,16 +1,36 @@
 import { useEffect, useState } from 'react';
-import './Signin.css';
+import { goTo } from "react-chrome-extension-router";
+import { signUpRequest } from '../services/UserService';
+import SignIn from './SignIn';
+import './Sign.css';
 
-export const SignUp = () => {
-    const [username, setUserName] = useState(null);
+const SignUp = () => {
+    const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [submited, setSubmited] = useState(false);
+    const [message, setMessage] = useState('');
+    const loadding = email && password && submited;
 
     useEffect(() => {
-        if (username && password) {
-            alert('aaa');    
+        if (email && password) {
+            setMessage('');
+            async function fetchMyAPI() {
+                const response = await signUpRequest(email, password);
+                if (!response.error) {
+                    goTo(SignIn);
+                } else {
+                    setMessage(response.error);
+                }
+            }
+            fetchMyAPI();
         }
     }, [submited]);
+
+
+    const handleInputChange = (setter, value) => {
+        setter(value);
+        setSubmited(false);
+    };
 
     return (
         <>
@@ -19,28 +39,31 @@ export const SignUp = () => {
             </div>
             <div class="form">
                 <div className='form-item'>
-                    <label>Username</label>
+                    <label>Email</label>
                     <input
                         type="text"
-                        onChange={(event) => setUserName(event.target.value)}
-                        className={submited && !username ? 'error' : ''}
-                        placeholder="Enter Username"
+                        onChange={(event) => handleInputChange(setEmail, event.target.value)}
+                        className={submited && !email ? 'error' : ''}
+                        placeholder="Enter Email"
                     />
                 </div>
                 <div className='form-item'>
                     <label>Password</label>
                     <input
                         type="password"
-                        onChange={(event) => setPassword(event.target.value)}
+                        onChange={(event) => handleInputChange(setPassword, event.target.value)}
                         className={submited && !password ? 'error' : ''}
                         placeholder="Enter Password"
                     />
                 </div>
                 <div className='form-item'>
-                    <button onClick={() => setSubmited(true)}>Sign Up</button>
-                </div>                        
+                    <button className='submit-button' disabled={loadding} onClick={() => setSubmited(true)}>Sign Up</button>
+                </div>
+                <div className='message'>{message}</div>
+                <span className='link' onClick={() => goTo(SignIn)}>Sin In</span>
             </div>
-            {/* <Link></ */}
         </>
     );
 };
+
+export default SignUp;

@@ -31,7 +31,7 @@
     box-sizing: border-box;
 }
 
-button {
+.submit-button {
     background-color: #04AA6D;
     color: white;
     padding: 14px 20px;
@@ -41,6 +41,22 @@ button {
     width: 100%;
 }
   
-button:hover {
+.submit-button:hover {
     opacity: 0.8;
+}
+
+.link {
+    font-size: 15px;
+    color: rgb(26 115 232);
+    cursor: pointer;
+}
+
+.submit-button:disabled {
+    opacity: 0.3;
+}
+
+.message {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
 }

@@ -1,11 +1,19 @@
-import { Signin } from './components/SignIn';
+import SignIn from './components/SignIn';
+import {
+    Router,
+    Link,
+    goBack,
+    goTo,
+    popToTop
+} from "react-chrome-extension-router";
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-    
-      <Signin />
+        <Router>
+            <SignIn />
+        </Router>
     </div>
   );
 }
