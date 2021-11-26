@@ -1,0 +1,32 @@
+.home-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.home-header {
+    font-size: 20px;
+    padding: 40px 0;
+    background-color: darkcyan;
+    color: #fff;
+}
+
+.home-body {
+    margin: 35px 0;
+}
+
+.home-footer {
+    margin: 35px 0;
+    margin-top: auto;
+}
+
+.logout-button {
+    width: 100%;
+    color: #fff;
+    padding: 12px;
+    background-color: darkcyan;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}

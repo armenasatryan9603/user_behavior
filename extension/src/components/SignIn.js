@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { goTo } from "react-chrome-extension-router";
 import SignUp from './SignUp';
-import Home from './Home';
+import Home from './Home/Home';
 import { signInRequest } from '../services/UserService';
 import './Sign.css';
 
