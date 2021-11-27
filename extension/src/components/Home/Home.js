@@ -1,24 +1,27 @@
 import { useEffect, useState } from 'react';
-import { goTo } from "react-chrome-extension-router";
-import { setAuthToken } from '../../services/storageService';
 import { addPageUpdateListener } from '../../services/ChromeService';
+import { getAuthToken, removeAuthToken, handleChangeDOMScraping } from '../../services/storageService';
 import Switch from '../Switch/Switch';
-import SignIn from '../SignIn';
 import './Home.css';
 
-const Home = () => {
+const Home = (props) => {
     const [activeState, setActiveState] = useState(true);
+
     useEffect(() => {
-        
+        handleChangeDOMScraping(activeState);
     }, [activeState]);
 
     useEffect(() => {
-        addPageUpdateListener();
+        if (getAuthToken()) {
+            addPageUpdateListener();
+        } else {
+            props.goto('signin');
+        }
     }, []);
 
     const handleLogout = () => {
-        setAuthToken(null);
-        goTo(SignIn);
+        removeAuthToken();
+        props.goto('signin');
     };
 
     return (
@@ -27,7 +30,7 @@ const Home = () => {
                 Switch on to track the user behavior
             </div>
             <div className='home-body'>
-                <Switch onClick={() => setActiveState(!activeState)} />
+                <Switch checked={activeState} onClick={() => setActiveState(!activeState)} />
             </div>
             <div className='home-footer'>
                 <button className='logout-button' onClick={handleLogout}>Logout</button>

@@ -1,23 +1,22 @@
 import { useEffect, useState } from 'react';
-import { goTo } from "react-chrome-extension-router";
 import { signUpRequest } from '../services/UserService';
-import SignIn from './SignIn';
 import './Sign.css';
 
-const SignUp = () => {
+const SignUp = ({ goTo }) => {
     const [email, setEmail] = useState(null);
+    const [name, setName] = useState(null);
     const [password, setPassword] = useState(null);
     const [submited, setSubmited] = useState(false);
     const [message, setMessage] = useState('');
-    const loadding = email && password && submited;
+    const loadding = name && email && password && submited;
 
     useEffect(() => {
-        if (email && password) {
+        if (email && password && name) {
             setMessage('');
             async function fetchMyAPI() {
-                const response = await signUpRequest(email, password);
+                const response = await signUpRequest(name, email, password);
                 if (!response.error) {
-                    goTo(SignIn);
+                    goTo("signin");
                 } else {
                     setMessage(response.error);
                 }
@@ -38,6 +37,15 @@ const SignUp = () => {
                 Sign Up
             </div>
             <div class="form">
+            <div className='form-item'>
+                    <label>User Name</label>
+                    <input
+                        type="text"
+                        onChange={(event) => handleInputChange(setName, event.target.value)}
+                        className={submited && !name ? 'error' : ''}
+                        placeholder="Enter User Name"
+                    />
+                </div>
                 <div className='form-item'>
                     <label>Email</label>
                     <input
@@ -60,7 +68,7 @@ const SignUp = () => {
                     <button className='submit-button' disabled={loadding} onClick={() => setSubmited(true)}>Sign Up</button>
                 </div>
                 <div className='message'>{message}</div>
-                <span className='link' onClick={() => goTo(SignIn)}>Sin In</span>
+                <span className='link' onClick={() => goTo("signin")}>Sin In</span>
             </div>
         </>
     );

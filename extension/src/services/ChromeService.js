@@ -2,6 +2,8 @@
 import cheerio from 'cheerio';
 import { RESOURCE_LIST, EVENT_NAMES } from '../constants';
 import { createEvent } from './eventService';
+import { getDOMScrapingState } from './storageService';
+
 export const addPageUpdateListener = () => {
     chrome.tabs.onUpdated.addListener(handleTabLoaded);
 };
@@ -12,15 +14,24 @@ export const removePageUpdateListener = () => {
 
 function handleTabLoaded(tabId, changeInfo, tab) {
     const validResource = !!RESOURCE_LIST.find((resources) => resources.test(tab.url));
-    if (validResource) {
-        if (changeInfo.status === 'complete') {
-            chrome.tabs.sendMessage(tabId, {text: 'report_back'}, async (e) => {
+    const isScrapingActive = getDOMScrapingState();
+
+    if (validResource && changeInfo.status === 'complete' && isScrapingActive) {
+        chrome.tabs.sendMessage(
+            tabId,
+            {
+                text: 'report_back'
+            },
+            async (e) => {
                 const $ = cheerio.load(e);
-                const chackCategory = $("#breadcrumb-back-link").text() === '';
+                const isCategoryEmpty = $("#breadcrumb-back-link").text();
                 let categories = [];
 
-                if (chackCategory) {
-                    categories = $("#wayfinding-breadcrumbs_feature_div ul .a-list-item a").text().split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
+                if (!isCategoryEmpty) {
+                    categories = $("#wayfinding-breadcrumbs_feature_div ul .a-list-item a")
+                    .text()
+                    .split(/(\s+)/)
+                    .filter((e) => e.trim().length > 0 );
                 }
 
                 const body = {
@@ -40,8 +51,8 @@ function handleTabLoaded(tabId, changeInfo, tab) {
                     timestamp: Date.now(),  
                 };
 
-                const response = await createEvent(body);
-            });
-        }
+                await createEvent(body);
+            }
+        );
     }
 }

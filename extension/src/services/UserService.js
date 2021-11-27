@@ -12,9 +12,9 @@ export const signInRequest = async (email, password) => {
     }
 };
 
-export const signUpRequest = async (email, password) => {
+export const signUpRequest = async (name, email, password) => {
     try {
-        return await axios.post(API_URL + SIGN_UP_ACTION, { email, password });
+        return await axios.post(API_URL + SIGN_UP_ACTION, { name, email, password });
     } catch(error) {
         return {
             error: ERROR_MESSAGES.GLOBAL_ERROR_MESSAGE,

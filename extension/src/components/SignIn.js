@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-import { goTo } from "react-chrome-extension-router";
-import SignUp from './SignUp';
-import Home from './Home/Home';
 import { signInRequest } from '../services/UserService';
+import { getAuthToken, setAuthToken } from '../services/storageService';
 import './Sign.css';
 
-const SignIn = () => {
+const SignIn = (props) => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [submited, setSubmited] = useState(false);
@@ -13,11 +11,18 @@ const SignIn = () => {
     const loadding = email && password && submited;
 
     useEffect(() => {
+        if (getAuthToken()) {
+            props.goto('home');
+        }
+    },[]);
+
+    useEffect(() => {
         if (email && password) {
             async function fetchMyAPI() {
                 const response = await signInRequest(email, password);
                 if (!response.error) {
-                    goTo(Home);
+                    setAuthToken(response.data);
+                    props.goto('home');
                 } else {
                     setMessage(response.error);
                 }
@@ -59,7 +64,7 @@ const SignIn = () => {
                     <button className='submit-button' disabled={loadding} onClick={() => setSubmited(true)}>Sign In</button>
                 </div>
                 <div className='message'>{message}</div>
-                <span className='link' onClick={() => goTo(SignUp)}>Sin Up</span>
+                <span className='link' onClick={() => props.goto('signup')}>Sin Up</span>
             </div>
             
         </>
