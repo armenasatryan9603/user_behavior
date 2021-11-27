@@ -1,5 +1,7 @@
-export const API_URL = 'http://localhost:8080';
-export const EVENT_ACTION = '/events';
+export const API_URL = 'http://localhost:8080/';
+export const EVENT_ACTION = 'events';
+export const SIGN_UP_ACTION = 'signup';
+export const SIGN_IN_ACTION = 'signin';
 
 export const ERROR_MESSAGES = {
     GLOBAL_ERROR_MESSAGE: "Something went wrong :(",
