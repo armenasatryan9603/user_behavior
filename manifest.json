@@ -10,6 +10,10 @@
     "http://*/*", 
     "https://*/*"
   ],
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "js": ["scripts/content.js"]
+  }],
   "browser_action": {
     "default_popup": "extension/build/index.html",
     "default_icon": {
@@ -25,5 +29,5 @@
     "48": "/images/get_started48.png",
     "128": "/images/get_started128.png"
   },
-  "content_security_policy": "script-src 'self' 'sha256-SVF8nN41l0zPRIdRME1HuT/nR1pMPf0yJ3fh95QWQTE='; object-src 'self';"
+  "content_security_policy": "script-src 'self' 'sha256-A7F0Ao6Nfg/z55q91XBSpseezlB7iSC4Bj5iu2UMtR4='; object-src 'self';"
 }

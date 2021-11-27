@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
-import Switch from '../Switch/Switch';
 import { goTo } from "react-chrome-extension-router";
 import { setAuthToken } from '../../services/storageService';
+import { addPageUpdateListener } from '../../services/ChromeService';
+import Switch from '../Switch/Switch';
 import SignIn from '../SignIn';
 import './Home.css';
 
 const Home = () => {
     const [activeState, setActiveState] = useState(true);
-
     useEffect(() => {
         
     }, [activeState]);
+
+    useEffect(() => {
+        addPageUpdateListener();
+    }, []);
 
     const handleLogout = () => {
         setAuthToken(null);
