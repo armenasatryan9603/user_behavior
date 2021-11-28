@@ -34,5 +34,7 @@ yarn start or npm start
 3. Click on "Load unpacked" to load builded extension
 4. Open extension and sign up
 
+***additional***
+5. Update hash in manifest.json (content_security_policy) to avoid content policy issues..
 
 -----------------------------------------------------------------------------
