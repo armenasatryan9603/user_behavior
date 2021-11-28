@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { signInRequest } from '../services/UserService';
 import { getAuthToken, setAuthToken } from '../services/storageService';
+import { addPageUpdateListener } from '../services/ChromeService';
+import { handleEmailValidation } from '../utils';
 import './Sign.css';
 
 const SignIn = (props) => {
@@ -8,7 +10,7 @@ const SignIn = (props) => {
     const [password, setPassword] = useState(null);
     const [submited, setSubmited] = useState(false);
     const [message, setMessage] = useState('');
-    const loadding = email && password && submited;
+    const isEnabled = handleEmailValidation(email) && password && submited;
 
     useEffect(() => {
         if (getAuthToken()) {
@@ -21,10 +23,11 @@ const SignIn = (props) => {
             async function fetchMyAPI() {
                 const response = await signInRequest(email, password);
                 if (!response.error) {
-                    setAuthToken(response.data);
+                    setAuthToken(response.id);
+                    addPageUpdateListener();
                     props.goto('home');
                 } else {
-                    setMessage(response.error);
+                    setMessage(response.message);
                 }
             }
             fetchMyAPI();
@@ -45,7 +48,7 @@ const SignIn = (props) => {
                 <div className='form-item'>
                     <label>Email</label>
                     <input
-                        type="text"
+                        type="email"
                         onChange={(event) => handleInputChange(setEmail, event.target.value)}
                         className={submited && !email ? 'error' : ''}
                         placeholder="Enter Email"
@@ -61,7 +64,7 @@ const SignIn = (props) => {
                     />
                 </div>
                 <div className='form-item'>
-                    <button className='submit-button' disabled={loadding} onClick={() => setSubmited(true)}>Sign In</button>
+                    <button className='submit-button' disabled={isEnabled} onClick={() => setSubmited(true)}>Sign In</button>
                 </div>
                 <div className='message'>{message}</div>
                 <span className='link' onClick={() => props.goto('signup')}>Sin Up</span>

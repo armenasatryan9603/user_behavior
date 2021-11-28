@@ -1,26 +1,26 @@
 import { useEffect, useState } from 'react';
-import { addPageUpdateListener } from '../../services/ChromeService';
-import { getAuthToken, removeAuthToken, handleChangeDOMScraping } from '../../services/storageService';
+import { addPageUpdateListener, removePageUpdateListener } from '../../services/ChromeService';
+import { removeAuthToken, handleChangeDOMScraping, getDOMScrapingState } from '../../services/storageService';
 import Switch from '../Switch/Switch';
 import './Home.css';
 
+
+const initialState = getDOMScrapingState();
 const Home = (props) => {
-    const [activeState, setActiveState] = useState(true);
+    const [activeState, setActiveState] = useState(initialState);
 
     useEffect(() => {
+        if (activeState) {
+            addPageUpdateListener();
+        }else {
+            removePageUpdateListener();
+        }
         handleChangeDOMScraping(activeState);
     }, [activeState]);
 
-    useEffect(() => {
-        if (getAuthToken()) {
-            addPageUpdateListener();
-        } else {
-            props.goto('signin');
-        }
-    }, []);
-
     const handleLogout = () => {
         removeAuthToken();
+        removePageUpdateListener();
         props.goto('signin');
     };
 
@@ -37,7 +37,6 @@ const Home = (props) => {
             </div>
         </div>
     );
-
 };
 
 export default Home;

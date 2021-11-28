@@ -1,12 +1,12 @@
 export const getAuthToken = () => {
-    return JSON.parse(localStorage.getItem('token'));
+    return localStorage.getItem('token');
 };
 
 export const setAuthToken = (token) => {
     localStorage.setItem('token', JSON.stringify(token));
 };
 
-export const removeAuthToken = (token) => {
+export const removeAuthToken = () => {
     localStorage.removeItem('token');
 };
 
@@ -15,5 +15,5 @@ export const handleChangeDOMScraping = (state) => {
 };
 
 export const getDOMScrapingState = () => {
-    return JSON.parse(localStorage.getItem("scraping"));
+    return !!localStorage.getItem("scraping");
 };

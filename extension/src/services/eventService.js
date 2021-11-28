@@ -1,10 +1,14 @@
-import axios from "axios";
-import { API_URL, EVENT_ACTION, ERROR_MESSAGES } from '../constants';
-
+import { API_URL, EVENT_ACTION, ERROR_MESSAGES } from '../constants.js';
 
 export const createEvent = async (data) => {
     try {
-        return await axios.post(API_URL + EVENT_ACTION, data);
+        return await fetch(API_URL + EVENT_ACTION, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
     } catch(error) {
         return {
             error: ERROR_MESSAGES.CREATE_EVENT_ERROR,
@@ -15,7 +19,9 @@ export const createEvent = async (data) => {
 //these implementations is out of task ;) 
 export const readEvents = async (id = '') => {
     try {
-        return await axios.get(`${API_URL + EVENT_ACTION}/${id}`);
+        return await fetch(`${API_URL + EVENT_ACTION}/${id}`, {
+            method: 'GET',
+        });
     } catch(error) {
         return {
             error: ERROR_MESSAGES.READ_EVENT_ERROR,
@@ -25,7 +31,13 @@ export const readEvents = async (id = '') => {
 
 export const updateFullEvent = async (id = '', data = {}) => {
     try {
-        return await axios.put(`${API_URL + EVENT_ACTION}/${id}`, data);
+        return await fetch(`${API_URL + EVENT_ACTION}/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
     } catch(error) {
         return {
             error: ERROR_MESSAGES.UPDATE_EVENT_ERROR,
@@ -35,7 +47,13 @@ export const updateFullEvent = async (id = '', data = {}) => {
 
 export const updatePartlyEvent = async (id = '', mutationFields = {}) => {
     try {
-        return await axios.patch(`${API_URL + EVENT_ACTION}/${id}`, mutationFields);
+        return await fetch(`${API_URL + EVENT_ACTION}/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(mutationFields)
+        });
     } catch(error) {
         return {
             error: ERROR_MESSAGES.UPDATE_EVENT_ERROR,

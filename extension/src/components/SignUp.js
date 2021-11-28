@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { signUpRequest } from '../services/UserService';
+import { handleEmailValidation } from '../utils';
 import './Sign.css';
 
 const SignUp = ({ goTo }) => {
@@ -8,7 +9,7 @@ const SignUp = ({ goTo }) => {
     const [password, setPassword] = useState(null);
     const [submited, setSubmited] = useState(false);
     const [message, setMessage] = useState('');
-    const loadding = name && email && password && submited;
+    const isEnabled = name && handleEmailValidation(email) && password && submited;
 
     useEffect(() => {
         if (email && password && name) {
@@ -18,7 +19,7 @@ const SignUp = ({ goTo }) => {
                 if (!response.error) {
                     goTo("signin");
                 } else {
-                    setMessage(response.error);
+                    setMessage(response.message);
                 }
             }
             fetchMyAPI();
@@ -49,7 +50,7 @@ const SignUp = ({ goTo }) => {
                 <div className='form-item'>
                     <label>Email</label>
                     <input
-                        type="text"
+                        type="email"
                         onChange={(event) => handleInputChange(setEmail, event.target.value)}
                         className={submited && !email ? 'error' : ''}
                         placeholder="Enter Email"
@@ -65,7 +66,7 @@ const SignUp = ({ goTo }) => {
                     />
                 </div>
                 <div className='form-item'>
-                    <button className='submit-button' disabled={loadding} onClick={() => setSubmited(true)}>Sign Up</button>
+                    <button className='submit-button' disabled={isEnabled} onClick={() => setSubmited(true)}>Sign Up</button>
                 </div>
                 <div className='message'>{message}</div>
                 <span className='link' onClick={() => goTo("signin")}>Sin In</span>

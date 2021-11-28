@@ -5,7 +5,7 @@ const encryption = require("../Utils");
 exports.signup = (req, res) => {
     User.findOne({ email: req.body.email },function(err, data) {
         if (data) {
-            res.send("Email is already in use.");
+            res.send({ error: true, message: "Email is already in use." });
             return;
         }
         encryption.cryptPassword(req.body.password, (err, hash) => {
@@ -22,6 +22,7 @@ exports.signup = (req, res) => {
             })
             .catch(err => {
                 res.status(500).send({
+                    error: true,
                     message: err.message || "Some error occurred while creating the Event."
                 });
             });
@@ -32,15 +33,15 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
     User.findOne({ email: req.body.email },function(err, data) {
         if (!data) {
-            res.send("Email or Password is wrong.");
+            res.send({ message: "Email or Password is wrong.", error: true });
             return;
         }
         encryption.comparePassword(req.body.password, data.password, (err, match) => {
             if (match) {
-                res.send(data._id);
+                res.send({ id: data._id, error: false });
                 return;
             }
-            res.send("Email or Password is wrong.");
+            res.send({ message: "Email or Password is wrong.", error: true });
         });
     });
 };

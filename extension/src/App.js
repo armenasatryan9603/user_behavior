@@ -9,7 +9,6 @@ const initialPage = getAuthToken() ? 'home' : 'signin';
 
 function App() {
     const [page, setPage] = useState(initialPage);
-
     const handleNavigation = (e) => setPage(e);
 
     return (

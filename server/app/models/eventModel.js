@@ -1,14 +1,14 @@
 module.exports = mongoose => {
     const schema = mongoose.Schema(
         {
-            name: String,
-            email: String,
-            password: String,
+            userId: String,
+            url: String,
+            eventDetails: Object,
         },
         {
             timestamps: true
         }
     );
 
-    return mongoose.model("user", schema);
+    return mongoose.model("event", schema);
 };
