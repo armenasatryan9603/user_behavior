@@ -23,7 +23,7 @@ const SignIn = (props) => {
             async function fetchMyAPI() {
                 const response = await signInRequest(email, password);
                 if (!response.error) {
-                    setAuthToken(response.id);
+                    setAuthToken(response.token);
                     addPageUpdateListener();
                     props.goto('home');
                 } else {

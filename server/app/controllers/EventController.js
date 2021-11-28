@@ -18,18 +18,22 @@ exports.create = (req, res) => {
     });
 };
 
-// TODO
 // Retrieve all events.
 exports.getEvents = (req, res) => {
-
+// TODO
 };
 
 // Update a Event by id
 exports.update = (req, res) => {
-  
+// TODO
+};
+
+// Update a Event by id
+exports.partlyUpdate = (req, res) => {
+// TODO
 };
 
 // Delete a Event
 exports.delete = (req, res) => {
-
+// TODO
 };

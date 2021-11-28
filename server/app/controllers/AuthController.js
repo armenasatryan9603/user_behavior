@@ -1,6 +1,8 @@
 const db = require("../models");
 const User = db.users;
 const encryption = require("../Utils");
+var jwt = require("jsonwebtoken");
+const config = require("../config/auth.config");
 
 exports.signup = (req, res) => {
     User.findOne({ email: req.body.email },function(err, data) {
@@ -38,7 +40,14 @@ exports.signin = (req, res) => {
         }
         encryption.comparePassword(req.body.password, data.password, (err, match) => {
             if (match) {
-                res.send({ id: data._id, error: false });
+                const token = jwt.sign(
+                    { id: data._id },
+                    config.secret,
+                    {
+                        expiresIn: 86400 // 24 hours
+                    }
+                );
+                res.send({ token, error: false });
                 return;
             }
             res.send({ message: "Email or Password is wrong.", error: true });
