@@ -24,7 +24,7 @@ function handleTabLoaded(tabId, changeInfo, tab) {
             },
             async (e) => {
                 const parser = new DOMParser();
-                var DOM = parser.parseFromString(e, "text/html");
+                const DOM = parser.parseFromString(e, "text/html");
 
                 const isCategoryEmpty = DOM.querySelector("#breadcrumb-back-link")?.innerText;
                 let categories = [];

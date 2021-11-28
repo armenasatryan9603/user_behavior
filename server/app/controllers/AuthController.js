@@ -1,7 +1,7 @@
 const db = require("../models");
 const User = db.users;
 const encryption = require("../Utils");
-var jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config");
 
 exports.signup = (req, res) => {

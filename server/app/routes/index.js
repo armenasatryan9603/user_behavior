@@ -5,8 +5,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 module.exports = app => {
     const events = require("../controllers/EventController.js");
     const auth = require("../controllers/AuthController");
-
-    var router = require("express").Router();
+    const router = require("express").Router();
 
     router.post("/signin",  auth.signin);
     router.post("/signup", signupMiddleware, auth.signup);

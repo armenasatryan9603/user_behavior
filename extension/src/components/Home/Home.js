@@ -12,7 +12,7 @@ const Home = (props) => {
     useEffect(() => {
         if (activeState) {
             addPageUpdateListener();
-        }else {
+        } else {
             removePageUpdateListener();
         }
         handleChangeDOMScraping(activeState);

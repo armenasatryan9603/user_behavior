@@ -13,6 +13,29 @@
 ## Run
 npm start or node server.js
 
+#### CREATE EVENT API EXAMPLE ####
+curl --location --request GET 'http://<your_api_url>:8080/events' \
+--header 'X-Custom-Header: token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "url": "",
+    "event": {
+        "productName": "",
+        "productBrand": "",
+        "price": "",
+        "asin": "",
+        "upc": "",
+        "subscribePrice": "",
+        "soldBy": "",
+        "referringAction": "Search",
+        "itemTags": [""],
+        "productAvailability": "",
+        "currency": "",
+        "categories": [""],
+        "eventName": "",
+        "timestamp": "Date.now()"
+    }
+}'
 
 -----------------------------------------------------------------------------
 
@@ -23,6 +46,9 @@ npm start or node server.js
 1. cd extension
 2. yarn install or npm install
 3. yarn run move or npm run move 
+
+## Test
+yarn test or npm test
 
 ## Run
 yarn start or npm start
