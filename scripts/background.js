@@ -1,15 +1,15 @@
 /*global chrome*/
-import { RESOURCE_LIST, EVENT_NAMES } from './../extension/src/constants.js';
+import { RESOURCE_LIST, EVENT_NAMES, TASK_COMMANDS } from './../extension/src/constants.js';
 import { createEvent } from './../extension/src/services/eventService.js';
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request === "start") {
+        if (request === TASK_COMMANDS.START) {
             chrome.tabs.onUpdated.addListener(handleTabLoaded);
         } else {
             chrome.tabs.onUpdated.removeListener(handleTabLoaded);
         }
-        sendResponse("bar");
+        sendResponse("done");
     }
 );
 

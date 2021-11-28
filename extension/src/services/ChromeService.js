@@ -1,8 +1,9 @@
 /*global chrome*/
+import { TASK_COMMANDS } from '../constants.js';
 
 export const addPageUpdateListener = () => {
     chrome.runtime.sendMessage(
-        "start",
+        TASK_COMMANDS.START,
         function (response) {
             // TODO: Need to handle
             console.log(response);
@@ -12,7 +13,7 @@ export const addPageUpdateListener = () => {
 
 export const removePageUpdateListener = () => {
     chrome.runtime.sendMessage(
-        "stop",
+        TASK_COMMANDS.STOP,
         function (response) {
             // TODO: Need to handle
             console.log(response);

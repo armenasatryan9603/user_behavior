@@ -3,7 +3,7 @@ import { signUpRequest } from '../services/UserService';
 import { handleEmailValidation } from '../utils';
 import './Sign.css';
 
-const SignUp = ({ goTo }) => {
+const SignUp = ({ goto }) => {
     const [email, setEmail] = useState(null);
     const [name, setName] = useState(null);
     const [password, setPassword] = useState(null);
@@ -17,7 +17,7 @@ const SignUp = ({ goTo }) => {
             async function fetchMyAPI() {
                 const response = await signUpRequest(name, email, password);
                 if (!response.error) {
-                    goTo("signin");
+                    goto("signin");
                 } else {
                     setMessage(response.message);
                 }
@@ -69,7 +69,7 @@ const SignUp = ({ goTo }) => {
                     <button className='submit-button' disabled={isEnabled} onClick={() => setSubmited(true)}>Sign Up</button>
                 </div>
                 <div className='message'>{message}</div>
-                <span className='link' onClick={() => goTo("signin")}>Sin In</span>
+                <span className='link' onClick={() => goto("signin")}>Sin In</span>
             </div>
         </>
     );

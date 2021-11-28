@@ -16,6 +16,11 @@ export const EVENT_NAMES = {
     // ...
 };
 
+export const TASK_COMMANDS = {
+    START: "start",
+    STOP: "stop",
+};
+
 export const RESOURCE_LIST = [
     /(https:\/\/www.amazon.com\/[\s\S]*\/)(?:dp|o|gp|-|dp\/product|gp\/product)\/(B[0-9]{2}[0-9A-Z]{7}|[0-9]{9}(?:X|[0-9]))/,
 ];

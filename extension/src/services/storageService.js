@@ -15,5 +15,5 @@ export const handleChangeDOMScraping = (state) => {
 };
 
 export const getDOMScrapingState = () => {
-    return !!localStorage.getItem("scraping");
+    return localStorage.getItem("scraping") == "true";
 };
